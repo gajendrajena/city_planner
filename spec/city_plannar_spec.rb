@@ -13,7 +13,7 @@ describe CityPlanner do
 
   describe '#build_road' do
     context 'when road params are valid' do
-      let (:city_planer) { CityPlanner.new }
+      let(:city_planer) { CityPlanner.new }
 
       it 'returns true after building the road' do
         expect(city_planer.build_road(0, 1)).to be_instance_of(Road)
@@ -21,7 +21,7 @@ describe CityPlanner do
     end
 
     context 'when road params are invalid' do
-      let (:city_planer) { CityPlanner.new }
+      let(:city_planer) { CityPlanner.new }
       it 'returns nil if arguments are nil' do
         expect(city_planer.build_road(nil, nil)).to be_nil
       end
@@ -29,49 +29,36 @@ describe CityPlanner do
   end
 
   describe '#exists' do
+    let(:cp) { CityPlanner.new }
     before do
-      city_planer.build_road(0, 1)
+      arr = [[0, 1], [0, 2], [1, 2], [2, 4], [3, 5], [5, 6], [4, 6]]
+      arr.each { |a| cp.build_road(a[0], a[1]) }
+    end
+    it 'returns true when a direct road exists between point 0 and 1' do
+      expect(cp.exists(0, 1)).to eq(true)
     end
 
-    context 'direct road' do
-      let (:city_planer) { CityPlanner.new }
+    context 'when indirect road exists' do
+      it 'returns true for points 0 and 2' do
+        expect(cp.exists(0, 2)).to eq(true)
+      end
 
-      it 'returns true for one direct road' do
-        expect(city_planer.exists(0, 1)).to eq(true)
+      it 'returns true for points 0 and 4' do
+        expect(cp.exists(0, 4)).to eq(true)
+      end
+
+      it 'returns true for points 0 and 6' do
+        expect(cp.exists(0, 6)).to eq(true)
       end
     end
 
-    context 'indirect road' do
-      it 'returns true for indirect roads with one point in common' do
-        city_planer.build_road(1, 2)
-
-        expect(city_planer.exists(0, 2)).to eq(true)
+    context 'when indirect road does not exist' do
+      it 'returns false for points 2 and 5' do
+        expect(cp.exists(2, 5)).to eq(false)
       end
 
-      let (:city_planer) { CityPlanner.new }
-      before do
-        city_planer.build_road(0, 2)
-        city_planer.build_road(1, 2)
-        city_planer.build_road(2, 4)
-        city_planer.build_road(3, 5)
-        city_planer.build_road(5, 6)
-        city_planer.build_road(4, 6)
-      end
-
-      it 'returns true' do
-        expect(city_planer.exists(0, 4)).to eq(true)
-      end
-
-      it 'returns true' do
-        expect(city_planer.exists(0, 6)).to eq(true)
-      end
-
-      it 'returns false' do
-        expect(city_planer.exists(2, 5)).to eq(false)
-      end
-
-      it 'returns false' do
-        expect(city_planer.exists(0, 5)).to eq(false)
+      it 'returns false for points 0 and 5' do
+        expect(cp.exists(0, 5)).to eq(false)
       end
     end
   end

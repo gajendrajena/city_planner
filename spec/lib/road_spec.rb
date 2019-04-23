@@ -4,7 +4,7 @@ require './lib/road'
 
 describe Road do
   describe '.initialize' do
-    let (:road) { Road.new('A', 'B') }
+    let(:road) { Road.new('A', 'B') }
 
     it 'returns true after building the road' do
       expect(road.point_a).to eq('A')

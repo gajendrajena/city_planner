@@ -26,3 +26,8 @@ This is a solution for city planner with following responsibilities
 ## Running spec
 
 `bundle exec rspec`
+
+
+## Running rubocop
+
+`rubocop`
