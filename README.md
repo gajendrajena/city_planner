@@ -20,14 +20,15 @@ This is a solution for city planner with following responsibilities
 `rvm install 2.6.0`
 
 - install dependencies
-`cd city_planner`
-`bundle install`
+ - `cd city_planner`
+ - `bundle install`
 
 ## Running spec
-
-`bundle exec rspec`
+ - `cd city_planner`
+ - `bundle exec rspec`
 
 
 ## Running rubocop
 
-`rubocop`
+ - `cd city_planner`
+ - `rubocop`
